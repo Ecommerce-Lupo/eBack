@@ -28,8 +28,15 @@ class ProductViewSet(ModelViewSet):
             serializer.save(user=user)
             return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-
-
+    
+    #Checkear si el usuario es admin
+    @action(methods=['delete'], detail=False)
+    def delete_product_by_id(self, request):
+        product_id = request.query_params.get('id')
+        product = Product.objects.get(id=product_id)
+        product.delete()
+        return Response({'message': 'Product deleted'}, status=status.HTTP_200_OK)
+    
     """All users actions"""
 
     @action(methods=['get'], detail=False)
@@ -45,4 +52,6 @@ class ProductViewSet(ModelViewSet):
         serialized_product = ProductByIdSerializer(product)
 
         return Response(serialized_product.data, status=status.HTTP_200_OK)
+    
+    
 

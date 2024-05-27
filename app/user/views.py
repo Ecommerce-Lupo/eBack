@@ -51,6 +51,13 @@ class UserModelViewSet(ModelViewSet):
     send_forgot_password_email(user.email, token)
 
     return Response({'message': f'Password reset email sent to {user.email}', 'status': status.HTTP_200_OK})
+  
+  @action(methods=['delete'], detail=False)
+  def delete_user(self, request, *args, **kwargs):
+    user_id = request.query_params.get('id')
+    user = User.objects.get(id=user_id)
+    user.delete()
+    return Response({'message': 'User deleted'}, status=status.HTTP_200_OK)
 
 class CustomLoginView(TokenObtainPairView):
 
