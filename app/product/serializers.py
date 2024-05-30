@@ -25,5 +25,5 @@ class ProductByIdSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Product
-        fields = [ 'id', 'name', 'description', 'price', 'created_at', 'updated_at', 'image'] # Podría ser necesario agregar el resto, o poner "__all__" para mostrar todos los campos
+        fields = "__all__"# Podría ser necesario agregar el resto, o poner "__all__" para mostrar todos los campos
         read_only_fields = ['user_name', 'user', 'created_at', 'updated_at']

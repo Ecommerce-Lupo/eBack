@@ -96,9 +96,9 @@ class Product(models.Model):
 
   id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
   name = models.CharField(max_length=255)
-  description = models.TextField()
+  description = models.TextField(default="No description", blank=True, null=True)
   price = models.PositiveIntegerField(default=0, blank=True)
-  discount_percentage = models.IntegerField(default=0, null=True, blank=True)
+  discount_percentage = models.IntegerField(default=0, blank=True)
   image = models.ImageField(null=True, upload_to='products-images/', blank=True)
   category = models.TextField(choices=CATEGORY_OPTIONS, null=True)
   gender = models.TextField(choices=GENDER_OPTIONS, null=True)
