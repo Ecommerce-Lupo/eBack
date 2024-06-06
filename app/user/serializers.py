@@ -18,3 +18,8 @@ class UserSerializer(serializers.ModelSerializer):
   def create(self, validated_data):
     """Create and return a new user"""
     return get_user_model().objects.create_user(**validated_data)
+  
+  def validate_name(self, value):
+    if len(value) < 5 or len(value) > 50:
+        raise serializers.ValidationError("El nombre debe tener entre 5 y 50 caracteres")
+    return value

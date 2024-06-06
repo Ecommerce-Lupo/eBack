@@ -60,6 +60,20 @@ class UserModelViewSet(ModelViewSet):
           return Response({'data': serializer.data}, status=status.HTTP_200_OK)
       else:
           return Response({'error': 'Not authenticated'}, status=status.HTTP_403_FORBIDDEN)
+  
+  @action(methods=['put'], detail=False, url_path='me')
+  def edit(self, request, *args, **kwargs):
+      user = request.user
+      if user.is_authenticated:
+          serializer = UserSerializer(user, data=request.data, partial=True)
+          print(serializer)
+          if serializer.is_valid():
+              serializer.save()
+              return Response({'data': serializer.data}, status=status.HTTP_200_OK)
+          else:
+              return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+      else:
+          return Response({'error': 'Not authenticated'}, status=status.HTTP_403_FORBIDDEN)
     
 
 class CustomLoginView(TokenObtainPairView):
