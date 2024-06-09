@@ -16,7 +16,7 @@ class ProductTest(TestCase):
 
     def test_create_order(self):
         self.client.force_authenticate(user=self.user)
-        url = reverse('order-create_order')
+        url = reverse('orders-create_order')
         data = {
             'street_address': '123 Test St',
             'city': 'Test City',
@@ -39,7 +39,7 @@ class ProductTest(TestCase):
     
     def test_create_order_empty_items(self):
         self.client.force_authenticate(user=self.user)
-        url = reverse('order-create_order')
+        url = reverse('orders-create_order')
         data = {
             'street_address': '123 Test St',
             'city': 'Test City',
@@ -52,7 +52,7 @@ class ProductTest(TestCase):
         self.assertIn('Order items cannot be empty', response.data['error'])
     
     def test_create_order_unauthenticated(self):
-        url = reverse('order-create_order')
+        url = reverse('orders-create_order')
         data = {
             'street_address': '123 Test St',
             'city': 'Test City',
