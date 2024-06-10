@@ -21,8 +21,7 @@ class OrderViewSet(ModelViewSet):
   def create_order(self, request):
     user = request.user
     order_items = request.data.get('order_items')
-
-    if order_items and len(order_items) == 0:
+    if order_items == []:
       return Response({'error': 'Order items cannot be empty'}, status=status.HTTP_400_BAD_REQUEST)
 
     else:
@@ -40,16 +39,15 @@ class OrderViewSet(ModelViewSet):
 
       for item in order_items:
         product = Product.objects.get(id=item.get('product_id'))
-
-        item = OrderItem.objects.create(
+        new_item = OrderItem.objects.create(
           order=order,
-          name=product.name,
+          product=product,
           quantity=item.get('quantity'),
           price=item.get('price'),
         )
 
-        product.stock -= item.quantity
+        product.quantity -= new_item.quantity
         product.save()
 
-      serializer = self.serializer_class(order, many=True)
+      serializer = self.serializer_class(order)
       return Response({'data': serializer.data}, status=status.HTTP_201_CREATED)

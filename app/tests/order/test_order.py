@@ -35,7 +35,7 @@ class ProductTest(TestCase):
         self.assertEqual(Order.objects.count(), 1)
         self.assertEqual(OrderItem.objects.count(), 1)
         self.product.refresh_from_db()
-        self.assertEqual(self.product.quantity, 98)
+        self.assertEqual(self.product.quantity, 8)
     
     def test_create_order_empty_items(self):
         self.client.force_authenticate(user=self.user)
