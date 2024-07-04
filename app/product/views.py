@@ -102,6 +102,10 @@ class ProductViewSet(ModelViewSet):
                 return_dict["error"] = "Invalid size"
                 return_list.append(return_dict)
                 continue
+            if not validate_gender(product.get("gender")):
+                return_dict["error"] = "Invalid gender" # Dangerous move
+                return_list.append(return_dict)
+                continue
             
             serializer = self.serializer_class(data=product)
             
