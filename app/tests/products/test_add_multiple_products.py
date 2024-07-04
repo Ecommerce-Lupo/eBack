@@ -236,8 +236,8 @@ class AddProduct(TestCase):
         }
         
         response = self.apiclient.post(self.url, json.dumps(data), content_type="application/json")     
-        print(response.data)   
-        self.assertEqual(response.status_code, 201)
+
+        self.assertEqual(response.status_code, 202)
         self.assertEqual(response.data["data"], [{'name': None, 'error': 'Invalid name'}, 
                                                  {'name': None, 'error': 'Invalid name'}, 
                                                  {'name': 'Test Add Multiple Products', 'error': 'Invalid price'}, 
@@ -250,3 +250,4 @@ class AddProduct(TestCase):
         # ahora revisamos que en la base de datos se crearon
         self.assertEqual(Product.objects.count(), 2)
         self.assertEqual(Product.objects.filter(name='Test Add Multiple Products').count(), 1)
+        

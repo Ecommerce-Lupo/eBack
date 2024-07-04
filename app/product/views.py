@@ -122,7 +122,11 @@ class ProductViewSet(ModelViewSet):
                 return_dict["error"] = serializer.errors
             return_list.append(return_dict)
         
-        return Response({'data': return_list}, status=status.HTTP_201_CREATED)
+        for product in return_list:
+            if product["error"] == "Producto creado sin errores":
+                return Response({'data': return_list}, status=status.HTTP_201_CREATED)
+            else:
+                return Response({'data': return_list}, status=status.HTTP_202_ACCEPTED)
         
         
 
