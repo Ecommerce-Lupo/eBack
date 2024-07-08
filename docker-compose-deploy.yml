@@ -22,6 +22,7 @@ services:
       - EMAIL_HOST_USER=aed94ea792cedd
       - EMAIL_HOST_PASSWORD=ae8936ec05a14d
       - EMAIL_PORT=2525
+
     depends_on:
       - db
 
@@ -43,30 +44,10 @@ services:
       - app
     ports:
       - "80:8000"
-      - "443:443"
     volumes:
-      - certbot-web:/vol/www
-      - proxy-dhparams:/vol/proxy
-      - certbot-certs:/etc/letsencrypt
-    environment:
-      - DOMAIN=${DOMAIN}
-
-  certbot:
-    build:
-      context: ./proxy/certbot
-    command: echo "Skipping..."
-    environment:
-      - EMAIL=${ACME_DEFAULT_EMAIL}
-      - DOMAIN=${DOMAIN}
-    volumes:
-      - certbot-web:/vol/www
-      - certbot-certs:/etc/letsencrypt/
-    depends_on:
-      - proxy
+      - static-data:/vol/static
 
 volumes:
   postgres-data:
   static-data:
-  certbot-web:
-  certbot-certs:
-  proxy-dhparams:
+
